@@ -3487,6 +3487,7 @@ function App() {
   const [showDisclaimerModal, setShowDisclaimerModal] = useState(false);
   const [emergencyAlert, setEmergencyAlert] = useState(false);
   const [activeCategory, setActiveCategory] = useState('전체');
+  const [visitCount, setVisitCount] = useState(null);
   const inputRef = useRef(null);
   useEffect(() => {
     const link = document.createElement('link');
@@ -3498,6 +3499,12 @@ function App() {
         document.head.removeChild(link);
       } catch (e) {}
     };
+  }, []);
+  useEffect(() => {
+    // Abacus visitor counter — namespace = domain, key = visits
+    fetch('https://abacus.jasoncameron.dev/hit/easy-diagnosis-guide.vercel.app/visits').then(r => r.ok ? r.json() : null).then(data => {
+      if (data && typeof data.value === 'number') setVisitCount(data.value);
+    }).catch(() => {});
   }, []);
   const matches = useMemo(() => matchDiseases(query), [query]);
   const grouped = useMemo(() => {
@@ -4437,6 +4444,23 @@ function App() {
       fontFamily: SANS
     }
   }, /*#__PURE__*/React.createElement("div", {
+    style: {
+      marginBottom: '14px',
+      paddingBottom: '12px',
+      borderBottom: `1px solid ${BORDER}`,
+      fontSize: '13px',
+      letterSpacing: '0.02em',
+      color: INK
+    }
+  }, "\uB204\uC801 \uBC29\uBB38 ", /*#__PURE__*/React.createElement("span", {
+    style: {
+      color: ACCENT,
+      fontWeight: 700,
+      fontFamily: SERIF,
+      fontSize: '15px',
+      margin: '0 2px'
+    }
+  }, visitCount !== null ? visitCount.toLocaleString() : '—'), "\uD68C"), /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: '6px',
       color: INK,
