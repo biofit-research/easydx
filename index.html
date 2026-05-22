@@ -3490,7 +3490,6 @@ function App() {
   const [showDisclaimerModal, setShowDisclaimerModal] = useState(false);
   const [emergencyAlert, setEmergencyAlert] = useState(false);
   const [activeCategory, setActiveCategory] = useState('');
-  const [visitCount, setVisitCount] = useState(null);
   const [favorites, setFavorites] = useState(() => {
     try { return JSON.parse(localStorage.getItem('diag_favorites') || '[]'); } catch (e) { return []; }
   });
@@ -3519,12 +3518,6 @@ function App() {
         document.head.removeChild(link);
       } catch (e) {}
     };
-  }, []);
-  useEffect(() => {
-    // Abacus visitor counter — namespace = domain, key = visits
-    fetch('https://abacus.jasoncameron.dev/hit/easy-diagnosis-guide.vercel.app/visits').then(r => r.ok ? r.json() : null).then(data => {
-      if (data && typeof data.value === 'number') setVisitCount(data.value);
-    }).catch(() => {});
   }, []);
   const matches = useMemo(() => matchDiseases(query), [query]);
   const grouped = useMemo(() => {
@@ -3591,7 +3584,7 @@ function App() {
       color: SUB,
       textTransform: 'uppercase'
     }
-  }, "EASY DIAGNOSIS GUIDE \xB7 v0.2")), /*#__PURE__*/React.createElement("h1", {
+  }, "EASY DIAGNOSIS GUIDE \xB7 v0.3")), /*#__PURE__*/React.createElement("h1", {
     style: {
       fontFamily: SERIF,
       fontSize: '48px',
@@ -4514,38 +4507,21 @@ function App() {
     }
   }, /*#__PURE__*/React.createElement("div", {
     style: {
-      marginBottom: '14px',
-      paddingBottom: '12px',
-      borderBottom: `1px solid ${BORDER}`,
-      fontSize: '13px',
-      letterSpacing: '0.02em',
-      color: INK
-    }
-  }, "\uB204\uC801 \uBC29\uBB38 ", /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: ACCENT,
-      fontWeight: 700,
-      fontFamily: SERIF,
-      fontSize: '15px',
-      margin: '0 2px'
-    }
-  }, visitCount !== null ? visitCount.toLocaleString() : '—'), "\uD68C"), /*#__PURE__*/React.createElement("div", {
-    style: {
       marginBottom: '6px',
       color: INK,
       fontWeight: 500
     }
-  }, "\uAC1C\uBC1C \xB7 \uC724\uC900\uC601 (\uC2EC\uC7A5\uB0B4\uACFC) \xB7 \uAC1C\uC778 \uD504\uB85C\uC81D\uD2B8"), /*#__PURE__*/React.createElement("div", {
+  }, "알기쉬운 진단명 가이드 · 의료진 검수"), /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: '10px'
     }
   }, "\uBB38\uC758 \xB7 ", /*#__PURE__*/React.createElement("a", {
-    href: "mailto:jyyoon@hotmail.com",
+    href: "mailto:easydxguide@gmail.com",
     style: {
       color: ACCENT,
       textDecoration: 'none'
     }
-  }, "jyyoon@hotmail.com")), /*#__PURE__*/React.createElement("div", null, "\xA9 2024\u20132026. All Rights Reserved.")));
+  }, "easydxguide@gmail.com")), /*#__PURE__*/React.createElement("div", null, "\xA9 2024\u20132026. All Rights Reserved.")));
 }
 function Section({
   icon,
